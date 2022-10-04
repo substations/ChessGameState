@@ -13,7 +13,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button runTextButton = findViewById(R.id.runTest);
+        Button runTestButton = findViewById(R.id.runTest);
         TextView textView = findViewById(R.id.multiLineText);
+        ChessState state = new ChessState();
+        runTestButton.setOnClickListener(state);
+        state.setRunTestButton(runTestButton);
+        state.setTextView(textView);
     }
 }

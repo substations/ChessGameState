@@ -36,7 +36,7 @@ public class ChessState implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-
+        textView.append("This button works");
     }
 
     public void setRunTestButton(Button button) {this.runTestButton = button;}
