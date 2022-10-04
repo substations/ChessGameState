@@ -1,9 +1,15 @@
 package com.example.chessgamestate;
 
-public class ChessState {
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+public class ChessState implements View.OnClickListener {
 
     private Piece[][] pieces;
     private int[][] board;
+    private Button runTestButton;
+    private TextView textView;
 
     private int playerToMove;
 
@@ -27,4 +33,12 @@ public class ChessState {
         }
 
     }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    public void setRunTestButton(Button button) {this.runTestButton = button;}
+    public void setTextView(TextView textView){this.textView = textView;}
 }
