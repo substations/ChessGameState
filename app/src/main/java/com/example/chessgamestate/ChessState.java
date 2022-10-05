@@ -23,28 +23,30 @@ public class ChessState implements View.OnClickListener {
         // Setting the initial position of all of the pieces
         for (int row = 0; row < pieces.length; row++) {
             for (int col = 0; col < pieces[row].length; col++) {
-                if (row == 0) {
-                    pieces[row][0] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.BLACK);
-                    pieces[row][1] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.BLACK);
-                    pieces[row][2] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.BLACK);
-                    pieces[row][3] = new Piece(Piece.PieceType.QUEEN, Piece.ColorType.BLACK);
-                    pieces[row][4] = new Piece(Piece.PieceType.KING, Piece.ColorType.BLACK);
-                    pieces[row][5] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.BLACK);
-                    pieces[row][6] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.BLACK);
-                    pieces[row][7] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.BLACK);
-                } else if (row == 1) {
-                    pieces[row][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.BLACK);
-                } else if (row == 6) {
-                    pieces[row][col] = new Piece(Piece.PieceType.PAWN, Piece.ColorType.WHITE);
-                } else if (row == 7) {
-                    pieces[row][0] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.WHITE);
-                    pieces[row][1] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.WHITE);
-                    pieces[row][2] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.WHITE);
-                    pieces[row][3] = new Piece(Piece.PieceType.QUEEN, Piece.ColorType.WHITE);
-                    pieces[row][4] = new Piece(Piece.PieceType.KING, Piece.ColorType.WHITE);
-                    pieces[row][5] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.WHITE);
-                    pieces[row][6] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.WHITE);
-                    pieces[row][7] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.WHITE);
+                if (col == 0) {
+                    pieces[0][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.BLACK);
+                    pieces[1][col] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.BLACK);
+                    pieces[2][col] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.BLACK);
+                    pieces[3][col] = new Piece(Piece.PieceType.QUEEN, Piece.ColorType.BLACK);
+                    pieces[4][col] = new Piece(Piece.PieceType.KING, Piece.ColorType.BLACK);
+                    pieces[5][col] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.BLACK);
+                    pieces[6][col] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.BLACK);
+                    pieces[7][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.BLACK);
+                } else if (col == 1) {
+                    pieces[row][1] = new Piece(Piece.PieceType.PAWN, Piece.ColorType.BLACK);
+                } else if (col == 6) {
+                    pieces[row][6] = new Piece(Piece.PieceType.PAWN, Piece.ColorType.WHITE);
+                } else if (col == 7) {
+                    pieces[0][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.WHITE);
+                    pieces[1][col] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.WHITE);
+                    pieces[2][col] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.WHITE);
+                    pieces[3][col] = new Piece(Piece.PieceType.QUEEN, Piece.ColorType.WHITE);
+                    pieces[4][col] = new Piece(Piece.PieceType.KING, Piece.ColorType.WHITE);
+                    pieces[5][col] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.WHITE);
+                    pieces[6][col] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.WHITE);
+                    pieces[7][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.WHITE);
+                } else {
+                    pieces[row][col] = new Piece(Piece.PieceType.EMPTY, Piece.ColorType.EMPTY);
                 }
             }
         }
