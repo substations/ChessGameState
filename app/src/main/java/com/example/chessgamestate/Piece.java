@@ -1,6 +1,19 @@
 package com.example.chessgamestate;
 
-public class Piece extends ChessState{
+import android.graphics.Color;
+
+public class Piece {
+
+
+    // An enum for the different types of pieces
+    public enum PieceType {
+        PAWN, BISHOP, ROOK, KNIGHT, KING, QUEEN
+    }
+
+    // An enum for the color of the pieces
+    public enum ColorType {
+        BLACK, WHITE
+    }
 
     private PieceType pieceType;
     private ColorType pieceColor;
@@ -12,5 +25,9 @@ public class Piece extends ChessState{
 
     public PieceType getPieceType() {
         return pieceType;
+    }
+
+    public ColorType getPieceColor() {
+        return pieceColor;
     }
 }

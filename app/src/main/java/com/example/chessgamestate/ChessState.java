@@ -6,20 +6,13 @@ import android.widget.TextView;
 
 public class ChessState implements View.OnClickListener {
 
-    // An enum for the different types of pieces
-    public enum PieceType {
-        PAWN, BISHOP, ROOK, KNIGHT, KING, QUEEN
-    }
-
-    // An enum for the color of the pieces
-    public enum ColorType {
-        BLACK, WHITE
-    }
-
     private Piece[][] pieces; // An array that holds all of the pieces and their position
     private int[][] board; // An array that determines what kind of drawing should be made
     private Button runTestButton;
     private TextView textView;
+
+    private boolean piecesPlaced = false;
+    private boolean boardInitialized = false;
 
     private int playerToMove;
 
@@ -28,55 +21,9 @@ public class ChessState implements View.OnClickListener {
         board = new int[8][8];
 
         // Setting the initial position of all of the pieces
-        for (int row = 0; row < 8; row++){
-            for (int col = 0; col < 8; col++){
-                if(row == 0) {
-                    pieces[row][0] = new Piece(PieceType.ROOK, ColorType.BLACK);
-                    pieces[row][1] = new Piece(PieceType.KNIGHT, ColorType.BLACK);
-                    pieces[row][2] = new Piece(PieceType.BISHOP, Piece.ColorType.BLACK);
-                    pieces[row][3] = new Piece(PieceType.QUEEN, ColorType.BLACK);
-                    pieces[row][4] = new Piece(PieceType.KING, ColorType.BLACK);
-                    pieces[row][5] = new Piece(PieceType.BISHOP, ColorType.BLACK);
-                    pieces[row][6] = new Piece(PieceType.KNIGHT, ColorType.BLACK);
-                    pieces[row][7] = new Piece(PieceType.ROOK, ColorType.BLACK);
-                } else if(row == 1) {
-                    pieces[row][col] = new Piece(PieceType.PAWN, ColorType.BLACK);
-
-                    if(pieces[row][col].getPieceType() == PieceType.PAWN) {
-                        //textView.append("This is a Pawn");
-                    }
-                } else if (row == 6) {
-                    pieces[row][col] = new Piece(PieceType.PAWN, ColorType.WHITE);
-                } else if (row == 7) {
-                    pieces[row][0] = new Piece(PieceType.ROOK, ColorType.WHITE);
-                    pieces[row][1] = new Piece(PieceType.KNIGHT, ColorType.WHITE);
-                    pieces[row][2] = new Piece(PieceType.BISHOP, ColorType.WHITE);
-                    pieces[row][3] = new Piece(PieceType.QUEEN, ColorType.WHITE);
-                    pieces[row][4] = new Piece(PieceType.KING, ColorType.WHITE);
-                    pieces[row][5] = new Piece(PieceType.BISHOP, ColorType.WHITE);
-                    pieces[row][6] = new Piece(PieceType.KNIGHT, ColorType.WHITE);
-                    pieces[row][7] = new Piece(PieceType.ROOK, ColorType.WHITE);
-                }
-            }
-        }
-
-        /*for(int row = 0; row < board.length; row++) {
-            for(int col = 0; col < board[col].length; col++) {
-                board[row][col] = 0;
-            }
-        }*/
-
-        playerToMove = 0;
-    }
-    /*
-    public ChessState(){
-        pieces = new Piece[8][8];
-        board = new int[8][8];
-
-        // Setting the initial position of all of the pieces
-        for (int row = 0; row < 8; row++){
-            for (int col = 0; col < 8; col++){
-                if(row == 0) {
+        for (int row = 0; row < pieces.length; row++) {
+            for (int col = 0; col < pieces[row].length; col++) {
+                if (row == 0) {
                     pieces[row][0] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.BLACK);
                     pieces[row][1] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.BLACK);
                     pieces[row][2] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.BLACK);
@@ -85,18 +32,8 @@ public class ChessState implements View.OnClickListener {
                     pieces[row][5] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.BLACK);
                     pieces[row][6] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.BLACK);
                     pieces[row][7] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.BLACK);
-                } else if(row == 1) {
-                    pieces[row][col] = new Piece(Piece.PieceType.PAWN, Piece.ColorType.BLACK);
-
-                    // Test if Pawn is placed
-                    if(pieces[row][0].equals(Piece.PieceType.PAWN)) {
-                        if (pieces[row][0].equals(Piece.ColorType.BLACK)) {
-                            System.out.println("Piece is Black Pawn");
-                        } else if (pieces[row][0].equals(Piece.ColorType.WHITE)) {
-                            System.out.println("Piece is Black Pawn");
-                        }
-                    } // Pawn Test
-
+                } else if (row == 1) {
+                    pieces[row][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.BLACK);
                 } else if (row == 6) {
                     pieces[row][col] = new Piece(Piece.PieceType.PAWN, Piece.ColorType.WHITE);
                 } else if (row == 7) {
@@ -111,12 +48,15 @@ public class ChessState implements View.OnClickListener {
                 }
             }
         }
+        piecesPlaced = true;
 
         for(int row = 0; row < board.length; row++) {
-            for(int col = 0; col < board[col].length; col++) {
+            for(int col = 0; col < board[row].length; col++) {
                 board[row][col] = 0;
             }
         }
+        boardInitialized = true;
+
 
         playerToMove = 0;
     }
@@ -182,11 +122,19 @@ public class ChessState implements View.OnClickListener {
         }
         return true;
     }
-    */
 
     @Override
     public void onClick(View view) {
-        textView.append("This button works");
+        textView.append("This button works\n");
+        if(piecesPlaced) {
+            textView.append("Pieces placed\n");
+        }
+        if(boardInitialized) {
+            textView.append("Board setup\n");
+        }
+        if(playerToMove == 0) {
+            textView.append("First player move\n");
+        }
     }
 
     public void setRunTestButton(Button button) {
