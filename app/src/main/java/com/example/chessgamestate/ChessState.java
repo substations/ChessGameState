@@ -14,6 +14,8 @@ public class ChessState implements View.OnClickListener {
     private boolean piecesPlaced = false;
     private boolean boardInitialized = false;
 
+    //0: white
+    //1: black
     private int playerToMove;
 
     public ChessState() {
@@ -106,6 +108,24 @@ public class ChessState implements View.OnClickListener {
 
     public void setWhoseMove(int id) {
         playerToMove = id;
+    }
+
+
+
+    //checks if selected piece and playerToMove color is consistent
+    public boolean checkSelectPiece(int id, Piece p){
+        //check if white
+        if((p.getPieceColor() == Piece.ColorType.WHITE) && (id == 0)){
+            return true;
+        } else if ((p.getPieceColor() == Piece.ColorType.BLACK) && (id == 1)){ //check if black
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean checkMovePiece(int id, Piece){
+
     }
 
     public boolean equals(Object other){
