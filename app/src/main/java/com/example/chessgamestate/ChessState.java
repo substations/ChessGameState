@@ -1,15 +1,15 @@
 package com.example.chessgamestate;
 
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ChessState implements View.OnClickListener {
+public class ChessState {
 
     private Piece[][] pieces; // An array that holds all of the pieces and their position
     private int[][] board; // An array that determines what kind of drawing should be made
     private Button runTestButton;
     private TextView textView;
+    private int turnCount;
 
     private boolean piecesPlaced = false;
     private boolean boardInitialized = false;
@@ -54,8 +54,8 @@ public class ChessState implements View.OnClickListener {
         }
         piecesPlaced = true;
 
-        for(int row = 0; row < board.length; row++) {
-            for(int col = 0; col < board[row].length; col++) {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
                 board[row][col] = 0;
             }
         }
@@ -63,6 +63,8 @@ public class ChessState implements View.OnClickListener {
 
 
         playerToMove = 0;
+
+        turnCount = 0;
     }
 
     // Copy Constructor
@@ -71,14 +73,14 @@ public class ChessState implements View.OnClickListener {
         pieces = new Piece[8][8];
         board = new int[8][8];
 
-        for(int i = 0; i < pieces.length; i++) {
-            for(int j = 0; j < pieces[i].length; j++) {
+        for (int i = 0; i < pieces.length; i++) {
+            for (int j = 0; j < pieces[i].length; j++) {
                 pieces[i][j] = other.pieces[i][j];
             }
         }
 
-        for(int i = 0; i < board.length; i++) {
-            for(int j = 0; j < board[i].length; j++) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
                 board[i][j] = other.board[i][j];
             }
         }
@@ -111,52 +113,37 @@ public class ChessState implements View.OnClickListener {
     }
 
 
-
     //checks if selected piece and playerToMove color is consistent
-    public boolean checkSelectPiece(int id, Piece p){
+    public boolean checkSelectPiece(int id, Piece p) {
         //check if white
-        if((p.getPieceColor() == Piece.ColorType.WHITE) && (id == 0)){
+        if ((p.getPieceColor() == Piece.ColorType.WHITE) && (id == 0)) {
             return true;
-        } else if ((p.getPieceColor() == Piece.ColorType.BLACK) && (id == 1)){ //check if black
+        } else if ((p.getPieceColor() == Piece.ColorType.BLACK) && (id == 1)) { //check if black
             return true;
         }
         return false;
     }
 
 
-    public boolean checkMovePiece(int id, Piece){
-
+    public boolean checkMovePiece(int id, Piece piece) {
+        return true;
     }
 
-    public boolean equals(Object other){
-        if(! (other instanceof ChessState)) return false;
+    public boolean equals(Object other) {
+        if (!(other instanceof ChessState)) return false;
         ChessState chessState = (ChessState) other;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if(this.board[i][j] != chessState.board[i][j]){
+                if (this.board[i][j] != chessState.board[i][j]) {
                     return false;
                 }
             }
         }
 
-        if (this.playerToMove != chessState.playerToMove){
+        if (this.playerToMove != chessState.playerToMove) {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public void onClick(View view) {
-        textView.append("This button works\n");
-        if(piecesPlaced) {
-            textView.append("Pieces placed\n");
-        }
-        if(boardInitialized) {
-            textView.append("Board setup\n");
-        }
-        if(playerToMove == 0) {
-            textView.append("First player move\n");
-        }
     }
 
     public void setRunTestButton(Button button) {
@@ -167,4 +154,37 @@ public class ChessState implements View.OnClickListener {
         this.textView = textView;
     }
 
+    @Override
+    public String toString() {
+        String toReturn = "";
+        if(turnCount == 0) {
+            if (piecesPlaced) {
+                toReturn += "Pieces Placed\n";
+            }
+            if (boardInitialized) {
+                toReturn += "Board setup\n";
+            }
+        }
+        int currPlayer = getWhoseMove();
+        if(turnCount == 0) {
+            toReturn += "Player " + currPlayer + "'s turn\n";
+            toReturn += "Player " + currPlayer + " chooses to move a Pawn\n";
+            toReturn += "Player " + currPlayer + " moves Pawn to e4\n";
+        }else if(turnCount == 1) {
+            toReturn += "Player " + currPlayer + "'s turn\n";
+            toReturn += "Player " + currPlayer + " chooses to move a Knight\n";
+            toReturn += "Player " + currPlayer + " moves Knight to f6\n";
+        }else if(turnCount == 2){
+            toReturn += "Player " + currPlayer + "'s turn\n";
+            toReturn += "Player " + currPlayer + " chooses to move a Bishop\n";
+            toReturn += "Player " + currPlayer + " moves Pawn to c4\n";
+        }else{
+            toReturn += "End of Game State\n";
+        }
+        turnCount++;
+        setWhoseMove(1 - currPlayer);
+        return toReturn;
+    }
+
+    public int getTurnCount(){return this.turnCount;}
 }
