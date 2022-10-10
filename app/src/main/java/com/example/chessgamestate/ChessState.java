@@ -10,6 +10,7 @@ public class ChessState implements View.OnClickListener {
     private int[][] board; // An array that determines what kind of drawing should be made
     private Button runTestButton;
     private TextView textView;
+    private int turnCount;
 
     private boolean piecesPlaced = false;
     private boolean boardInitialized = false;
@@ -63,6 +64,8 @@ public class ChessState implements View.OnClickListener {
 
 
         playerToMove = 0;
+
+        turnCount = 0;
     }
 
     // Copy Constructor
@@ -198,4 +201,37 @@ public class ChessState implements View.OnClickListener {
         this.textView = textView;
     }
 
+    @Override
+    public String toString() {
+        String toReturn = "";
+        if(turnCount == 0) {
+            if (piecesPlaced) {
+                toReturn += "Pieces Placed\n";
+            }
+            if (boardInitialized) {
+                toReturn += "Board setup\n";
+            }
+        }
+        int currPlayer = getWhoseMove();
+        if(turnCount == 0) {
+            toReturn += "Player " + currPlayer + "'s turn\n";
+            toReturn += "Player " + currPlayer + " chooses to move a Pawn\n";
+            toReturn += "Player " + currPlayer + " moves Pawn to e4\n";
+        }else if(turnCount == 1) {
+            toReturn += "Player " + currPlayer + "'s turn\n";
+            toReturn += "Player " + currPlayer + " chooses to move a Knight\n";
+            toReturn += "Player " + currPlayer + " moves Knight to f6\n";
+        }else if(turnCount == 2){
+            toReturn += "Player " + currPlayer + "'s turn\n";
+            toReturn += "Player " + currPlayer + " chooses to move a Bishop\n";
+            toReturn += "Player " + currPlayer + " moves Pawn to c4\n";
+        }else{
+            toReturn += "End of Game State\n";
+        }
+        turnCount++;
+        setWhoseMove(1 - currPlayer);
+        return toReturn;
+    }
+
+    public int getTurnCount(){return this.turnCount;}
 }
