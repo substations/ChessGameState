@@ -135,7 +135,7 @@ public class ChessState implements View.OnClickListener {
         }
         return false;
     }
-
+    //checks if the selected piece is able to capture the piece on the position they want to move to
     public boolean checkCapture(Piece currentPiece, Piece otherPiece) {
         if(currentPiece.getPieceColor() == Piece.ColorType.WHITE && otherPiece.getPieceColor() == Piece.ColorType.BLACK) {
             return true;
@@ -145,6 +145,7 @@ public class ChessState implements View.OnClickListener {
         return false;
     }
 
+    //checks if the player moving is a pawn and if that pawn is able to be promoted because of its current position
     public boolean checkPromotion(Piece p) {
         if (p.getPieceType() == Piece.PieceType.PAWN && p.getPieceColor() == Piece.ColorType.WHITE) {
             for(int i = 0; i < pieces[0].length; i++) {
