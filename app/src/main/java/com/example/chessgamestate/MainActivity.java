@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        //set to empty text
         textView.append(String.valueOf(firstInstance));
         if(firstInstance.getTurnCount() > 2) {
             textView.append("\nThis is the Second Instance: \n");
