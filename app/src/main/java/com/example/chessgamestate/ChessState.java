@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ChessState implements View.OnClickListener {
+public class ChessState {
 
     private Piece[][] pieces; // An array that holds all of the pieces and their position
     private int[][] board; // An array that determines what kind of drawing should be made
@@ -61,10 +61,7 @@ public class ChessState implements View.OnClickListener {
             }
         }
         boardInitialized = true;
-
-
         playerToMove = 0;
-
         turnCount = 0;
     }
 
@@ -73,7 +70,6 @@ public class ChessState implements View.OnClickListener {
 
         pieces = new Piece[8][8];
         board = new int[8][8];
-
         for(int i = 0; i < pieces.length; i++) {
             for(int j = 0; j < pieces[i].length; j++) {
                 pieces[i][j] = other.pieces[i][j];
@@ -85,8 +81,10 @@ public class ChessState implements View.OnClickListener {
                 board[i][j] = other.board[i][j];
             }
         }
-
+        boardInitialized = other.boardInitialized;
+        piecesPlaced = other.piecesPlaced;
         playerToMove = other.playerToMove;
+        turnCount = other.turnCount;
     }
 
     public void setBoard(int row, int col, int num) {
@@ -192,20 +190,6 @@ public class ChessState implements View.OnClickListener {
         return true;
     }
 
-    @Override
-    public void onClick(View view) {
-        textView.append("This button works\n");
-        if(piecesPlaced) {
-            textView.append("Pieces placed\n");
-        }
-        if(boardInitialized) {
-            textView.append("Board setup\n");
-        }
-        if(playerToMove == 0) {
-            textView.append("First player move\n");
-        }
-    }
-
     public void setRunTestButton(Button button) {
         this.runTestButton = button;
     }
@@ -241,8 +225,8 @@ public class ChessState implements View.OnClickListener {
         }else{
             toReturn += "End of Game State\n";
         }
-        turnCount++;
         setWhoseMove(1 - currPlayer);
+        turnCount++;
         return toReturn;
     }
 
