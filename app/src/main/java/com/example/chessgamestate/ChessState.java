@@ -123,9 +123,40 @@ public class ChessState implements View.OnClickListener {
         return false;
     }
 
+    //checks if the selected piece is able to go to the new position they want to move to
+    public boolean checkMovePiece(Piece currentPiece, Piece newPiece){
+        if(currentPiece.getPieceColor() == Piece.ColorType.WHITE && newPiece.getPieceColor() != Piece.ColorType.WHITE) {
+            return true;
+        } else if(currentPiece.getPieceColor() == Piece.ColorType.BLACK && newPiece.getPieceColor() != Piece.ColorType.BLACK) {
+            return true;
+        }
+        return false;
+    }
 
-    public boolean checkMovePiece(int id, Piece){
+    public boolean checkCapture(Piece currentPiece, Piece otherPiece) {
+        if(currentPiece.getPieceColor() == Piece.ColorType.WHITE && otherPiece.getPieceColor() == Piece.ColorType.BLACK) {
+            return true;
+        } else if(currentPiece.getPieceColor() == Piece.ColorType.BLACK && otherPiece.getPieceColor() == Piece.ColorType.WHITE) {
+            return true;
+        }
+        return false;
+    }
 
+    public boolean checkPromotion(Piece p) {
+        if (p.getPieceType() == Piece.PieceType.PAWN && p.getPieceColor() == Piece.ColorType.WHITE) {
+            for(int i = 0; i < pieces[0].length; i++) {
+                if (p == pieces[0][i]) {
+                    return true;
+                }
+            }
+        } else if(p.getPieceType() == Piece.PieceType.PAWN && p.getPieceColor() == Piece.ColorType.BLACK) {
+            for (int i = 0; i < pieces[0].length; i++) {
+                if (p == pieces[7][i]) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public boolean equals(Object other){
