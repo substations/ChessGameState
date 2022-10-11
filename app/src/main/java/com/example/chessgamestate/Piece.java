@@ -18,9 +18,14 @@ public class Piece {
     private PieceType pieceType;
     private ColorType pieceColor;
 
-    public Piece(PieceType pieceType, ColorType pieceColor) {
+    private int x;
+    private int y;
+
+    public Piece(PieceType pieceType, ColorType pieceColor, int x, int y) {
         this.pieceType = pieceType;
         this.pieceColor = pieceColor;
+        this.x = x;
+        this.y = y;
     }
 
     public PieceType getPieceType() {
@@ -29,6 +34,14 @@ public class Piece {
 
     public ColorType getPieceColor() {
         return pieceColor;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     @Override

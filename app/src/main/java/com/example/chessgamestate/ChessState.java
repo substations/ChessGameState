@@ -26,33 +26,33 @@ public class ChessState {
         for (int row = 0; row < pieces.length; row++) {
             for (int col = 0; col < pieces[row].length; col++) {
                 if (col == 0) {
-                    pieces[0][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.BLACK);
-                    pieces[1][col] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.BLACK);
-                    pieces[2][col] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.BLACK);
-                    pieces[3][col] = new Piece(Piece.PieceType.QUEEN, Piece.ColorType.BLACK);
-                    pieces[4][col] = new Piece(Piece.PieceType.KING, Piece.ColorType.BLACK);
-                    pieces[5][col] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.BLACK);
-                    pieces[6][col] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.BLACK);
-                    pieces[7][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.BLACK);
+                    pieces[0][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.BLACK, 0, col);
+                    pieces[1][col] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.BLACK, 1, col);
+                    pieces[2][col] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.BLACK, 2, col);
+                    pieces[3][col] = new Piece(Piece.PieceType.QUEEN, Piece.ColorType.BLACK, 3, col);
+                    pieces[4][col] = new Piece(Piece.PieceType.KING, Piece.ColorType.BLACK, 4, col);
+                    pieces[5][col] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.BLACK, 5, col);
+                    pieces[6][col] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.BLACK, 6, col);
+                    pieces[7][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.BLACK, 7, col);
                 } else if (col == 1) {
-                    pieces[row][1] = new Piece(Piece.PieceType.PAWN, Piece.ColorType.BLACK);
+                    pieces[row][1] = new Piece(Piece.PieceType.PAWN, Piece.ColorType.BLACK, row, 1);
                 } else if (col == 6) {
-                    pieces[row][6] = new Piece(Piece.PieceType.PAWN, Piece.ColorType.WHITE);
+                    pieces[row][6] = new Piece(Piece.PieceType.PAWN, Piece.ColorType.WHITE, row, 6);
                 } else if (col == 7) {
-                    pieces[0][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.WHITE);
-                    pieces[1][col] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.WHITE);
-                    pieces[2][col] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.WHITE);
-                    pieces[3][col] = new Piece(Piece.PieceType.QUEEN, Piece.ColorType.WHITE);
-                    pieces[4][col] = new Piece(Piece.PieceType.KING, Piece.ColorType.WHITE);
-                    pieces[5][col] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.WHITE);
-                    pieces[6][col] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.WHITE);
-                    pieces[7][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.WHITE);
+                    pieces[0][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.WHITE,0, col);
+                    pieces[1][col] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.WHITE, 1, col);
+                    pieces[2][col] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.WHITE, 2, col);
+                    pieces[3][col] = new Piece(Piece.PieceType.QUEEN, Piece.ColorType.WHITE, 3, col);
+                    pieces[4][col] = new Piece(Piece.PieceType.KING, Piece.ColorType.WHITE, 4, col);
+                    pieces[5][col] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.WHITE, 5, col);
+                    pieces[6][col] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.WHITE, 6, col);
+                    pieces[7][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.WHITE, 7, col);
                 } else {
-                    pieces[row][col] = new Piece(Piece.PieceType.EMPTY, Piece.ColorType.EMPTY);
+                    pieces[row][col] = new Piece(Piece.PieceType.EMPTY, Piece.ColorType.EMPTY, row, col);
                 }
             }
         }
-        emptyPiece = new Piece(Piece.PieceType.EMPTY,Piece.ColorType.EMPTY);
+        emptyPiece = new Piece(Piece.PieceType.EMPTY,Piece.ColorType.EMPTY, 0, 0);
         piecesPlaced = true;
 
         for(int row = 0; row < board.length; row++) {
@@ -123,13 +123,284 @@ public class ChessState {
     }
 
     //checks if the selected piece is able to go to the new position they want to move to
-    public boolean checkMovePiece(int id, Piece currentPiece, Piece newPiece){
-        if(id == 0 && currentPiece.getPieceColor() == Piece.ColorType.WHITE &&
-                newPiece.getPieceColor() != Piece.ColorType.WHITE) {
+    public boolean checkMovePiece(int id, Piece currentPiece, Piece newPosition){
+        if(id == 0 && currentPiece.getPieceColor() == Piece.ColorType.WHITE
+                && newPosition.getPieceColor() != Piece.ColorType.WHITE) {
+            if (currentPiece.getPieceType() == Piece.PieceType.PAWN) {
+                Piece.ColorType color = Piece.ColorType.WHITE;
+                movePawn(currentPiece, newPosition, color);
+            } else if (currentPiece.getPieceType() == Piece.PieceType.BISHOP) {
+                moveBishop(currentPiece, newPosition);
+            } else if (currentPiece.getPieceType() == Piece.PieceType.KNIGHT) {
+                moveKnight(currentPiece, newPosition);
+            } else if (currentPiece.getPieceType() == Piece.PieceType.ROOK) {
+                moveRook(currentPiece, newPosition);
+            } else if (currentPiece.getPieceType() == Piece.PieceType.QUEEN) {
+                moveQueen(currentPiece, newPosition);
+            } else if (currentPiece.getPieceType() == Piece.PieceType.KING) {
+                moveKing(currentPiece, newPosition);
+            }
+        } else if (id == 1 && currentPiece.getPieceColor() == Piece.ColorType.BLACK
+                && newPosition.getPieceColor() != Piece.ColorType.BLACK) {
+            if (currentPiece.getPieceType() == Piece.PieceType.PAWN) {
+                Piece.ColorType color = Piece.ColorType.BLACK;
+                movePawn(currentPiece, newPosition, color);
+            } else if (currentPiece.getPieceType() == Piece.PieceType.BISHOP) {
+                moveBishop(currentPiece, newPosition);
+            } else if (currentPiece.getPieceType() == Piece.PieceType.KNIGHT) {
+                moveKnight(currentPiece, newPosition);
+            } else if (currentPiece.getPieceType() == Piece.PieceType.ROOK) {
+                moveRook(currentPiece, newPosition);
+            } else if (currentPiece.getPieceType() == Piece.PieceType.QUEEN) {
+                moveQueen(currentPiece, newPosition);
+            } else if (currentPiece.getPieceType() == Piece.PieceType.KING) {
+                moveKing(currentPiece, newPosition);
+            }
+        }
+        return false;
+    }
+
+    public boolean movePawn(Piece currentPosition, Piece newPosition, Piece.ColorType color) {
+        if(color == Piece.ColorType.WHITE) {
+            if (newPosition.getX() == (currentPosition.getX() + 2)) {
+                if (newPosition.getY() == 6) {
+                    return true;
+                }
+            } else if (newPosition.getX() == (currentPosition.getX() + 1)) {
+                return true;
+            }
+        } else if(color == Piece.ColorType.BLACK) {
+            if (newPosition.getX() == (currentPosition.getX() - 2)) {
+                if (newPosition.getY() == 1) {
+                    return true;
+                }
+            } else if (newPosition.getX() == (currentPosition.getX() - 1)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean moveBishop(Piece currentPosition, Piece newPosition) {
+        if(generalDiagonalMove(currentPosition, newPosition)) {
             return true;
-        } else if(id == 1 && currentPiece.getPieceColor() == Piece.ColorType.BLACK &&
-                newPiece.getPieceColor() != Piece.ColorType.BLACK) {
+        }
+        return false;
+    }
+
+    public boolean generalDiagonalMove(Piece currentPosition, Piece newPosition) {
+        for(int i = 1; i < pieces.length; i++) {
+            //moving up and right
+            if(currentPosition.getX() + i <= 7) {
+                //moving right
+                if (newPosition.getX() == currentPosition.getX() + i) {
+                    if (currentPosition.getY() - i >= 0) {
+                        //moving up
+                        if (newPosition.getY() == currentPosition.getY() - i) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            //moving up and left
+            if(currentPosition.getX() - i >= 0) {
+                //moving left
+                if (newPosition.getX() == currentPosition.getX() - i) {
+                    if (currentPosition.getY() - i >= 0) {
+                        //moving up
+                        if (newPosition.getY() == currentPosition.getY() - i) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            //moving down and left
+            if(currentPosition.getX() - i >= 0) {
+                //moving left
+                if (newPosition.getX() == currentPosition.getX() - i) {
+                    if (currentPosition.getY() + i <= 7) {
+                        //moving down
+                        if (newPosition.getY() == currentPosition.getY() + i) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            //moving down and right
+            if(currentPosition.getX() + i <= 7) {
+                //moving right
+                if (newPosition.getX() == currentPosition.getX() + i) {
+                    if (currentPosition.getY() + i <= 7) {
+                        //moving down
+                        if (newPosition.getY() == currentPosition.getY() + i) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean generalSideMove(Piece currentPosition, Piece newPosition) {
+        for(int i = 1; i < pieces.length; i++) {
+            //moving left
+            if(newPosition.getX() - i >= 0) {
+                if(newPosition.getX() == currentPosition.getX() - i) {
+                    return true;
+                }
+            }
+            //moving right
+            if(newPosition.getX() + i <= 7) {
+                if(newPosition.getX() == currentPosition.getX() + i) {
+                    return true;
+                }
+            }
+            //moving up
+            if(newPosition.getY() - i >= 0) {
+                if(newPosition.getY() == currentPosition.getY() - i) {
+                    return true;
+                }
+            }
+            //moving down
+            if(newPosition.getY() + i <= 7) {
+                if(newPosition.getY() == currentPosition.getY() + i) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean moveKnight(Piece currentPosition, Piece newPosition) {
+        if(currentPosition.getX() + 2 <= 7) {
+            if (newPosition.getX() == currentPosition.getX() + 2) {
+                if (newPosition.getY() == currentPosition.getY() + 1) {
+                    return true;
+                } else if (newPosition.getY() == currentPosition.getY() - 1) {
+                    return true;
+                }
+            }
+        }
+        if(currentPosition.getX() - 2 >= 0) {
+            if (newPosition.getX() == currentPosition.getX() - 2) {
+                if (newPosition.getY() == currentPosition.getY() + 1) {
+                    return true;
+                } else if (newPosition.getY() == currentPosition.getY() - 1) {
+                    return true;
+                }
+            }
+        }
+        if(currentPosition.getY() + 2 <= 7) {
+            if (newPosition.getY() == currentPosition.getY() + 2) {
+                if (newPosition.getX() == currentPosition.getX() + 1) {
+                    return true;
+                } else if (newPosition.getX() == currentPosition.getX() - 1) {
+                    return true;
+                }
+            }
+        }
+        if(currentPosition.getY() - 2 >= 0) {
+            if (newPosition.getY() == currentPosition.getY() - 2) {
+                if (newPosition.getX() == currentPosition.getX() + 1) {
+                    return true;
+                } else if (newPosition.getX() == currentPosition.getX() - 1) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean moveRook(Piece currentPosition, Piece newPosition) {
+        if(generalSideMove(currentPosition, newPosition)) {
             return true;
+        }
+        return false;
+    }
+
+    public boolean moveQueen(Piece currentPosition, Piece newPosition) {
+        if(generalDiagonalMove(currentPosition, newPosition)) {
+            return true;
+        }
+        if(generalSideMove(currentPosition, newPosition)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean moveKing(Piece currentPosition, Piece newPosition) {
+        //moving up and right
+        if(currentPosition.getX() + 1 <= 7) {
+            //moving right
+            if (newPosition.getX() == currentPosition.getX() + 1) {
+                if (currentPosition.getY() - 1 >= 0) {
+                    //moving up
+                    if (newPosition.getY() == currentPosition.getY() - 1) {
+                        return true;
+                    }
+                }
+            }
+        }
+        //moving up and left
+        if(currentPosition.getX() - 1 >= 0) {
+            //moving left
+            if (newPosition.getX() == currentPosition.getX() - 1) {
+                if (currentPosition.getY() - 1 >= 0) {
+                    //moving up
+                    if (newPosition.getY() == currentPosition.getY() - 1) {
+                        return true;
+                    }
+                }
+            }
+        }
+        //moving down and left
+        if(currentPosition.getX() - 1 >= 0) {
+            //moving left
+            if (newPosition.getX() == currentPosition.getX() - 1) {
+                if (currentPosition.getY() + 1 <= 7) {
+                    //moving down
+                    if (newPosition.getY() == currentPosition.getY() + 1) {
+                        return true;
+                    }
+                }
+            }
+        }
+        //moving down and right
+        if(currentPosition.getX() + 1 <= 7) {
+            //moving right
+            if (newPosition.getX() == currentPosition.getX() + 1) {
+                if (currentPosition.getY() + 1 <= 7) {
+                    //moving down
+                    if (newPosition.getY() == currentPosition.getY() + 1) {
+                        return true;
+                    }
+                }
+            }
+        }
+        //moving left
+        if(newPosition.getX() - 1 >= 0) {
+            if(newPosition.getX() == currentPosition.getX() - 1) {
+                return true;
+            }
+        }
+        //moving right
+        if(newPosition.getX() + 1 <= 7) {
+            if(newPosition.getX() == currentPosition.getX() + 1) {
+                return true;
+            }
+        }
+        //moving up
+        if(newPosition.getY() - 1 >= 0) {
+            if(newPosition.getY() == currentPosition.getY() - 1) {
+                return true;
+            }
+        }
+        //moving down
+        if(newPosition.getY() + 1 <= 7) {
+            if(newPosition.getY() == currentPosition.getY() + 1) {
+                return true;
+            }
         }
         return false;
     }
