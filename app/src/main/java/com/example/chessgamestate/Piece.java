@@ -30,4 +30,23 @@ public class Piece {
     public ColorType getPieceColor() {
         return pieceColor;
     }
+
+    @Override
+    public String toString() {
+        if(pieceType == PieceType.PAWN) {
+            return "P\t";
+        }else if(pieceType == PieceType.BISHOP) {
+            return "B\t";
+        }else if (pieceType == PieceType.KNIGHT){
+            return "N\t";
+        }else if (pieceType == PieceType.ROOK) {
+            return "R\t";
+        }else if(pieceType == PieceType.KING){
+            return "K\t";
+        }else if (pieceType == PieceType.QUEEN) {
+            return "Q\t";
+        }
+        return "E\t";
+
+    }
 }
