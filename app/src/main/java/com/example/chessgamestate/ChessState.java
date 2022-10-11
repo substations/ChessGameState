@@ -414,12 +414,37 @@ public class ChessState {
 
     //checks if the selected piece is able to capture the piece on the position they want to move to
     public boolean checkCapture(int id, Piece currentPiece, Piece otherPiece) {
-        if(id == 0 && currentPiece.getPieceColor() == Piece.ColorType.WHITE &&
-                otherPiece.getPieceColor() == Piece.ColorType.BLACK) {
-            return true;
-        } else if(id == 1 && currentPiece.getPieceColor() == Piece.ColorType.BLACK &&
-                otherPiece.getPieceColor() == Piece.ColorType.WHITE) {
-            return true;
+        if(currentPiece.getPieceType() != Piece.PieceType.PAWN) {
+            if (id == 0 && currentPiece.getPieceColor() == Piece.ColorType.WHITE &&
+                    otherPiece.getPieceColor() == Piece.ColorType.BLACK) {
+                return true;
+            } else if (id == 1 && currentPiece.getPieceColor() == Piece.ColorType.BLACK &&
+                    otherPiece.getPieceColor() == Piece.ColorType.WHITE) {
+                return true;
+            }
+        } else if (currentPiece.getPieceType() == Piece.PieceType.PAWN) {
+            checkCapturePawn(id, currentPiece, otherPiece);
+        }
+        return false;
+    }
+
+    public boolean checkCapturePawn(int id, Piece currentPiece, Piece otherPiece) {
+        if(id == 0) {
+            if (otherPiece.getX() == currentPiece.getX() + 1) {
+                if (otherPiece.getY() == currentPiece.getY() + 1) {
+                    if(otherPiece.getPieceColor() == Piece.ColorType.BLACK) {
+                        return true;
+                    }
+                }
+            }
+        } else if (id == 1) {
+            if (otherPiece.getX() == currentPiece.getX() + 1) {
+                if (otherPiece.getY() == currentPiece.getY() + 1) {
+                    if (otherPiece.getPieceColor() == Piece.ColorType.WHITE) {
+                        return true;
+                    }
+                }
+            }
         }
         return false;
     }
