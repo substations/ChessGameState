@@ -30,11 +30,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         textView.append(String.valueOf(firstInstance));
-        if(firstInstance.getTurnCount() > 2) {
-            textView.append("\nThis is the Second Instance: \n");
-            textView.append(String.valueOf(secondInstance));
-            textView.append("\nThis is the Third Instance: \n");
-            textView.append(String.valueOf(thirdInstance));
+        firstInstance.setWhoseMove(firstInstance.getWhoseMove());
+        if(firstInstance.checkSelectPiece(firstInstance.getWhoseMove(), firstInstance.getPiece(5,6))) {
+            if(firstInstance.checkMovePiece(firstInstance.getWhoseMove(), firstInstance.getPiece(5,6)
+            ,firstInstance.getPiece(5,4))){
+                if(firstInstance.checkCapture(firstInstance.getWhoseMove(), firstInstance.getPiece(5,6),firstInstance.getPiece(5,4)
+                )){}
+                firstInstance.setPiece(5,4,firstInstance.getPiece(5,6));
+                firstInstance.setPiece(5,6,firstInstance.emptyPiece);
+            }
         }
+        textView.append("\n\n");
+        textView.append(String.valueOf(firstInstance));
     }
 }

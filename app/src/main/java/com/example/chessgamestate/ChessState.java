@@ -12,6 +12,7 @@ public class ChessState {
 
     private boolean piecesPlaced = false;
     private boolean boardInitialized = false;
+    public Piece emptyPiece;
 
     //0: white
     //1: black
@@ -51,6 +52,7 @@ public class ChessState {
                 }
             }
         }
+        emptyPiece = new Piece(Piece.PieceType.EMPTY,Piece.ColorType.EMPTY);
         piecesPlaced = true;
 
         for(int row = 0; row < board.length; row++) {
