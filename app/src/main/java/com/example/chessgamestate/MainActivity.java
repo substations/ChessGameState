@@ -13,12 +13,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ChessState firstInstance;
     private ChessState secondInstance;
     private ChessState thirdInstance;
+    private int numClicks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        numClicks = 0;
         Button runTestButton = findViewById(R.id.runTest);
         textView = findViewById(R.id.multiLineText);
         runTestButton.setOnClickListener(this);
@@ -29,18 +30,87 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        textView.append(String.valueOf(firstInstance));
+
+        if(numClicks == 0) {
+            textView.append("Initial Board:\n" + String.valueOf(firstInstance));
+        }
         firstInstance.setWhoseMove(firstInstance.getWhoseMove());
-        if(firstInstance.checkSelectPiece(firstInstance.getWhoseMove(), firstInstance.getPiece(4,6))) {
-            if(firstInstance.checkMovePiece(firstInstance.getWhoseMove(), firstInstance.getPiece(4,6)
-            ,firstInstance.getPiece(4,4))){
-                if(firstInstance.checkCapture(firstInstance.getWhoseMove(), firstInstance.getPiece(4,6),firstInstance.getPiece(4,4)
-                )){}
-                firstInstance.setPiece(4,4,firstInstance.getPiece(4,6));
-                firstInstance.setPiece(4,6,firstInstance.emptyPiece);
+        if(numClicks == 0) {
+            if(canMove()) {
+                if(canCapture()) {
+                    makeCapture();
+                }else{
+                    makeMove();
+                }
+            }
+        }else if(numClicks == 1) {
+            if(canMove()) {
+                if(canCapture()) {
+                    makeCapture();
+                }else{
+                    makeMove();
+                }
+            }
+        }else if(numClicks == 2) {
+            if(canMove()) {
+                if(canCapture()) {
+                    makeCapture();
+                }else{
+                    makeMove();
+                }
             }
         }
+        numClicks++;
+        firstInstance.setWhoseMove(1 - firstInstance.getWhoseMove());
         textView.append("\n\n");
         textView.append(String.valueOf(firstInstance));
+        textView.append("\n\n");
+    }
+
+    public boolean canMove() {
+        boolean move = false;
+        if(numClicks == 0) {
+            move = firstInstance.checkSelectPiece(firstInstance.getWhoseMove(), firstInstance.getPiece(4, 6))
+                    && firstInstance.checkMovePiece(firstInstance.getWhoseMove(), firstInstance.getPiece(4, 6),
+                    firstInstance.getPiece(4, 4));
+        }else if(numClicks == 1){
+            textView.append(""+firstInstance.getWhoseMove());
+            move = firstInstance.checkSelectPiece(firstInstance.getWhoseMove(), firstInstance.getPiece(3, 1))
+                    && firstInstance.checkMovePiece(firstInstance.getWhoseMove(), firstInstance.getPiece(3, 1),
+                    firstInstance.getPiece(3, 3));
+        }else if(numClicks == 2){
+
+        }
+        return move;
+    }
+
+    public void makeMove() {
+        if(numClicks == 0) {
+            firstInstance.setPiece(4, 4, firstInstance.getPiece(4, 6));
+            firstInstance.setPiece(4, 6, firstInstance.emptyPiece);
+        }else if(numClicks == 1){
+            firstInstance.setPiece(3, 3, firstInstance.getPiece(3, 1));
+            firstInstance.setPiece(3, 1, firstInstance.emptyPiece);
+        }else if(numClicks == 2){
+
+        }
+    }
+
+    public void makeCapture(){
+
+    }
+
+    public boolean canCapture(){
+        boolean capture = false;
+        if(numClicks == 0) {
+            capture = firstInstance.checkCapture(firstInstance.getWhoseMove(), firstInstance.getPiece(4, 6),
+                    firstInstance.getPiece(4, 4));
+        }else if(numClicks == 1){
+            capture = firstInstance.checkCapture(firstInstance.getWhoseMove(), firstInstance.getPiece(3, 1),
+                    firstInstance.getPiece(3, 3));
+        }else if(numClicks == 2){
+
+        }
+        return capture;
     }
 }
