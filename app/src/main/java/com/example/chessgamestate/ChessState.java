@@ -133,6 +133,7 @@ public class ChessState {
         }
         return false;
     }
+
     //checks if the selected piece is able to capture the piece on the position they want to move to
     public boolean checkCapture(int id, Piece currentPiece, Piece otherPiece) {
         if(id == 0 && currentPiece.getPieceColor() == Piece.ColorType.WHITE &&
