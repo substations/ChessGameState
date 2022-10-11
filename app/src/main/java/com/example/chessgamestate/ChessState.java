@@ -4,11 +4,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ChessState {
 
     private Piece[][] pieces; // An array that holds all of the pieces and their position
     private int[][] board; // An array that determines what kind of drawing should be made
     private int turnCount;
+
+    private ArrayList<Piece> whiteCapturedPieces;
+    private ArrayList<Piece> blackCapturedPieces;
 
     private boolean piecesPlaced = false;
     private boolean boardInitialized = false;
@@ -21,6 +26,8 @@ public class ChessState {
     public ChessState() {
         pieces = new Piece[8][8];
         board = new int[8][8];
+        whiteCapturedPieces =new ArrayList<>();
+        blackCapturedPieces =new ArrayList<>();
 
         // Setting the initial position of all of the pieces
         for (int row = 0; row < pieces.length; row++) {
@@ -464,36 +471,6 @@ public class ChessState {
 
     @Override
     public String toString() {
-//        String toReturn = "";
-//        if(turnCount == 0) {
-//            if (piecesPlaced) {
-//                toReturn += "Pieces Placed\n";
-//            }
-//            if (boardInitialized) {
-//                toReturn += "Board setup\n";
-//            }
-//        }
-//        int currPlayer = getWhoseMove();
-//        boolean canMove = checkSelectPiece(currPlayer,pieces[5][6]) &&
-//                checkMovePiece(currPlayer,pieces[5][6],pieces[5][4]);
-//        if(turnCount == 0) {
-//            toReturn += "Player " + currPlayer + "'s turn\n";
-//            toReturn += "Player " + currPlayer + " chooses to move a Pawn\n";
-//            toReturn += "Player " + currPlayer + " moves Pawn to e4\n";
-//        }else if(turnCount == 1) {
-//            toReturn += "Player " + currPlayer + "'s turn\n";
-//            toReturn += "Player " + currPlayer + " chooses to move a Knight\n";
-//            toReturn += "Player " + currPlayer + " moves Knight to f6\n";
-//        }else if(turnCount == 2){
-//            toReturn += "Player " + currPlayer + "'s turn\n";
-//            toReturn += "Player " + currPlayer + " chooses to move a Bishop\n";
-//            toReturn += "Player " + currPlayer + " moves Pawn to c4\n";
-//        }else{
-//            toReturn += "End of Game State\n";
-//        }
-//        setWhoseMove(1 - currPlayer);
-//        turnCount++;
-//        return toReturn;
         String toReturn = "";
         for(int i = 0; i < pieces.length; i++) {
             for(int j = 0; j < pieces[i].length; j++) {
@@ -501,8 +478,24 @@ public class ChessState {
             }
             toReturn += "\n";
         }
+
+        toReturn += "\n White Captured Pieces: ";
+
+        for(int i = 0; i < whiteCapturedPieces.size(); i++){
+            toReturn += (String.valueOf(whiteCapturedPieces.get(i)));
+        }
+
+        toReturn += "\n Black Captured Pieces: ";
+        for(int i = 0; i < blackCapturedPieces.size(); i++){
+            toReturn += (String.valueOf(blackCapturedPieces.get(i)));
+        }
+
+        toReturn += "\n";
         return toReturn;
     }
 
     public int getTurnCount(){return this.turnCount;}
+
+    public ArrayList<Piece> getWhiteCapturedPieces(){return this.whiteCapturedPieces;}
+    public ArrayList<Piece> getBlackCapturedPieces(){return this.blackCapturedPieces;}
 }
