@@ -37,27 +37,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         firstInstance.setWhoseMove(firstInstance.getWhoseMove());
         if(numClicks == 0) {
             if(canMove()) {
-                if(canCapture()) {
-                    makeCapture();
-                }else{
-                    makeMove();
-                }
+                makeMove();
+            }else if(canCapture()) {
+                makeCapture();
             }
         }else if(numClicks == 1) {
             if(canMove()) {
-                if(canCapture()) {
-                    makeCapture();
-                }else{
-                    makeMove();
-                }
+                makeMove();
+            }else if(canCapture()) {
+                makeCapture();
             }
         }else if(numClicks == 2) {
             if(canMove()) {
-                if(canCapture()) {
-                    makeCapture();
-                }else{
-                    makeMove();
-                }
+                makeMove();
+            }else if(canCapture()) {
+                makeCapture();
             }
         }
         numClicks++;
@@ -79,7 +73,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     && firstInstance.checkMovePiece(firstInstance.getWhoseMove(), firstInstance.getPiece(3, 1),
                     firstInstance.getPiece(3, 3));
         }else if(numClicks == 2){
-
+            move = firstInstance.checkSelectPiece(firstInstance.getWhoseMove(), firstInstance.getPiece(3, 1))
+                    && firstInstance.checkMovePiece(firstInstance.getWhoseMove(), firstInstance.getPiece(4, 4),
+                    firstInstance.getPiece(3, 3));
         }
         return move;
     }
@@ -91,13 +87,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(numClicks == 1){
             firstInstance.setPiece(3, 3, firstInstance.getPiece(3, 1));
             firstInstance.setPiece(3, 1, firstInstance.emptyPiece);
-        }else if(numClicks == 2){
-
         }
     }
 
     public void makeCapture(){
+        int currPlayer = firstInstance.getWhoseMove();
+        if(currPlayer == 0) {
+            firstInstance.getWhiteCapturedPieces().add(firstInstance.getPiece(3,3));
+            firstInstance.setPiece(3, 3, firstInstance.getPiece(4, 4));
+            firstInstance.setPiece(4, 4, firstInstance.emptyPiece);
+        }else {
 
+        }
     }
 
     public boolean canCapture(){
@@ -109,7 +110,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             capture = firstInstance.checkCapture(firstInstance.getWhoseMove(), firstInstance.getPiece(3, 1),
                     firstInstance.getPiece(3, 3));
         }else if(numClicks == 2){
-
+            capture = firstInstance.checkCapture(firstInstance.getWhoseMove(), firstInstance.getPiece(4, 4),
+                    firstInstance.getPiece(3, 3));
         }
         return capture;
     }
