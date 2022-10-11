@@ -8,8 +8,6 @@ public class ChessState {
 
     private Piece[][] pieces; // An array that holds all of the pieces and their position
     private int[][] board; // An array that determines what kind of drawing should be made
-    private Button runTestButton;
-    private TextView textView;
     private int turnCount;
 
     private boolean piecesPlaced = false;
@@ -111,8 +109,6 @@ public class ChessState {
         playerToMove = id;
     }
 
-
-
     //checks if selected piece and playerToMove color is consistent
     public boolean checkSelectPiece(int id, Piece p){
         //check if white
@@ -176,14 +172,6 @@ public class ChessState {
             return false;
         }
         return true;
-    }
-
-    public void setRunTestButton(Button button) {
-        this.runTestButton = button;
-    }
-
-    public void setTextView(TextView textView) {
-        this.textView = textView;
     }
 
     @Override
