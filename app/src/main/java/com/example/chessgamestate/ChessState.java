@@ -55,6 +55,7 @@ public class ChessState {
         }
         piecesPlaced = true;
 
+
         for(int row = 0; row < board.length; row++) {
             for(int col = 0; col < board[row].length; col++) {
                 board[row][col] = 0;
@@ -210,6 +211,7 @@ public class ChessState {
             }
         }
         int currPlayer = getWhoseMove();
+
         if(turnCount == 0) {
             toReturn += "Player " + currPlayer + "'s turn\n";
             toReturn += "Player " + currPlayer + " chooses to move a Pawn\n";
