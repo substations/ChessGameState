@@ -121,19 +121,23 @@ public class ChessState {
     }
 
     //checks if the selected piece is able to go to the new position they want to move to
-    public boolean checkMovePiece(Piece currentPiece, Piece newPiece){
-        if(currentPiece.getPieceColor() == Piece.ColorType.WHITE && newPiece.getPieceColor() != Piece.ColorType.WHITE) {
+    public boolean checkMovePiece(int id, Piece currentPiece, Piece newPiece){
+        if(id == 0 && currentPiece.getPieceColor() == Piece.ColorType.WHITE &&
+                newPiece.getPieceColor() != Piece.ColorType.WHITE) {
             return true;
-        } else if(currentPiece.getPieceColor() == Piece.ColorType.BLACK && newPiece.getPieceColor() != Piece.ColorType.BLACK) {
+        } else if(id == 1 && currentPiece.getPieceColor() == Piece.ColorType.BLACK &&
+                newPiece.getPieceColor() != Piece.ColorType.BLACK) {
             return true;
         }
         return false;
     }
     //checks if the selected piece is able to capture the piece on the position they want to move to
-    public boolean checkCapture(Piece currentPiece, Piece otherPiece) {
-        if(currentPiece.getPieceColor() == Piece.ColorType.WHITE && otherPiece.getPieceColor() == Piece.ColorType.BLACK) {
+    public boolean checkCapture(int id, Piece currentPiece, Piece otherPiece) {
+        if(id == 0 && currentPiece.getPieceColor() == Piece.ColorType.WHITE &&
+                otherPiece.getPieceColor() == Piece.ColorType.BLACK) {
             return true;
-        } else if(currentPiece.getPieceColor() == Piece.ColorType.BLACK && otherPiece.getPieceColor() == Piece.ColorType.WHITE) {
+        } else if(id == 1 && currentPiece.getPieceColor() == Piece.ColorType.BLACK &&
+                otherPiece.getPieceColor() == Piece.ColorType.WHITE) {
             return true;
         }
         return false;
@@ -153,6 +157,16 @@ public class ChessState {
                     return true;
                 }
             }
+        }
+        return false;
+    }
+
+    //checks if it's the players turn who clicks the resign button
+    public boolean checkResign(int id) {
+        if (id == 0) {
+            return true;
+        } else if (id == 1) {
+            return true;
         }
         return false;
     }
