@@ -4,11 +4,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ChessState {
 
     private Piece[][] pieces; // An array that holds all of the pieces and their position
     private int[][] board; // An array that determines what kind of drawing should be made
     private int turnCount;
+
+    private ArrayList<Piece> whiteCapturedPieces;
+    private ArrayList<Piece> blackCapturedPieces;
 
     private boolean piecesPlaced = false;
     private boolean boardInitialized = false;
@@ -21,6 +26,8 @@ public class ChessState {
     public ChessState() {
         pieces = new Piece[8][8];
         board = new int[8][8];
+        whiteCapturedPieces =new ArrayList<>();
+        blackCapturedPieces =new ArrayList<>();
 
         // Setting the initial position of all of the pieces
         for (int row = 0; row < pieces.length; row++) {
@@ -229,6 +236,19 @@ public class ChessState {
             }
             toReturn += "\n";
         }
+
+        toReturn += "\n White Captured Pieces: ";
+
+        for(int i = 0; i < whiteCapturedPieces.size(); i++){
+            toReturn += (String.valueOf(whiteCapturedPieces.get(i)));
+        }
+
+        toReturn += "\n Black Captured Pieces: ";
+        for(int i = 0; i < blackCapturedPieces.size(); i++){
+            toReturn += (String.valueOf(blackCapturedPieces.get(i)));
+        }
+
+
         return toReturn;
     }
 
