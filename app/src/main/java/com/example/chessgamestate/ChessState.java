@@ -248,7 +248,7 @@ public class ChessState {
             toReturn += (String.valueOf(blackCapturedPieces.get(i)));
         }
 
-
+        toReturn += "\n";
         return toReturn;
     }
 
