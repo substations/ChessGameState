@@ -31,13 +31,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         textView.append(String.valueOf(firstInstance));
         firstInstance.setWhoseMove(firstInstance.getWhoseMove());
-        if(firstInstance.checkSelectPiece(firstInstance.getWhoseMove(), firstInstance.getPiece(5,6))) {
-            if(firstInstance.checkMovePiece(firstInstance.getWhoseMove(), firstInstance.getPiece(5,6)
-            ,firstInstance.getPiece(5,4))){
-                if(firstInstance.checkCapture(firstInstance.getWhoseMove(), firstInstance.getPiece(5,6),firstInstance.getPiece(5,4)
+        if(firstInstance.checkSelectPiece(firstInstance.getWhoseMove(), firstInstance.getPiece(4,6))) {
+            if(firstInstance.checkMovePiece(firstInstance.getWhoseMove(), firstInstance.getPiece(4,6)
+            ,firstInstance.getPiece(4,4))){
+                if(firstInstance.checkCapture(firstInstance.getWhoseMove(), firstInstance.getPiece(4,6),firstInstance.getPiece(4,4)
                 )){}
-                firstInstance.setPiece(5,4,firstInstance.getPiece(5,6));
-                firstInstance.setPiece(5,6,firstInstance.emptyPiece);
+                firstInstance.setPiece(4,4,firstInstance.getPiece(4,6));
+                firstInstance.setPiece(4,6,firstInstance.emptyPiece);
             }
         }
         textView.append("\n\n");

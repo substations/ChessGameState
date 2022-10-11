@@ -34,19 +34,19 @@ public class Piece {
     @Override
     public String toString() {
         if(pieceType == PieceType.PAWN) {
-            return "P";
+            return "P\t";
         }else if(pieceType == PieceType.BISHOP) {
-            return "B";
+            return "B\t";
         }else if (pieceType == PieceType.KNIGHT){
-            return "N";
+            return "N\t";
         }else if (pieceType == PieceType.ROOK) {
-            return "R";
+            return "R\t";
         }else if(pieceType == PieceType.KING){
-            return "K";
+            return "K\t";
         }else if (pieceType == PieceType.QUEEN) {
-            return "Q";
+            return "Q\t";
         }
-        return "E";
+        return "E\t";
 
     }
 }
