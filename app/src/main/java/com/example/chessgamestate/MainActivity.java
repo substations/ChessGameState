@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button runTestButton = findViewById(R.id.runTest);
         textView = findViewById(R.id.multiLineText);
         runTestButton.setOnClickListener(this);
+        runTestButton.setText("RUN TEST");
         firstInstance = new ChessState();
         secondInstance = new ChessState(firstInstance);
         thirdInstance = new ChessState();
@@ -34,26 +35,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(numClicks == 0) {
             textView.append("Initial Board:\n" + String.valueOf(firstInstance));
         }
-        firstInstance.setWhoseMove(firstInstance.getWhoseMove());
-        if(numClicks == 0) {
-            if(canMove()) {
-                if(canCapture()) {
-                    makeCapture();
-                }
-                makeMove();
-            }
-        }else if(numClicks == 1) {
-            if(canMove()) {
-                makeMove();
-            }else if(canCapture()) {
-                makeCapture();
-            }
-        }else if(numClicks == 2) {
-            if(canMove()) {
-                makeMove();
-            }else if(canCapture()) {
-                makeCapture();
-            }
+        String currPlayer = firstInstance.getWhoseMove() == 0 ? "White" : "Black";
+        textView.append("\n" + currPlayer + "'s Move\n");
+        textView.append(currPlayer + " chooses to move a pawn\n");
+        if(canMove()){
+            makeMove();
+        }else if(canCapture()){
+            textView.append(currPlayer + " has captured a pawn\n");
+            makeCapture();
         }
         numClicks++;
         firstInstance.setWhoseMove(1 - firstInstance.getWhoseMove());
@@ -97,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             firstInstance.getWhiteCapturedPieces().add(firstInstance.getPiece(3,3));
             firstInstance.setPiece(3, 3, firstInstance.getPiece(4, 4));
             firstInstance.setPiece(4, 4, firstInstance.emptyPiece);
-        }else {
-
         }
     }
 
