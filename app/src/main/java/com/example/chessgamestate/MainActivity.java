@@ -37,9 +37,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         firstInstance.setWhoseMove(firstInstance.getWhoseMove());
         if(numClicks == 0) {
             if(canMove()) {
+                if(canCapture()) {
+                    makeCapture();
+                }
                 makeMove();
-            }else if(canCapture()) {
-                makeCapture();
             }
         }else if(numClicks == 1) {
             if(canMove()) {

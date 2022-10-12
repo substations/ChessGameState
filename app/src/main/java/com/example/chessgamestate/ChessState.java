@@ -175,6 +175,9 @@ public class ChessState {
                 }
             } else if (newPosition.getX() == (currentPosition.getX() + 1)) {
                 return true;
+            } else if (newPosition.getX() == currentPosition.getX() + 1 &&
+                    newPosition.getY() == currentPosition.getY() + 1) {
+                return true;
             }
         } else if(color == Piece.ColorType.BLACK) {
             if (newPosition.getX() == (currentPosition.getX() - 2)) {
@@ -423,12 +426,12 @@ public class ChessState {
                 return true;
             }
         } else if (currentPiece.getPieceType() == Piece.PieceType.PAWN) {
-            checkCapturePawn(id, currentPiece, otherPiece);
+            //checkCapturePawn(id, currentPiece, otherPiece);
         }
         return false;
     }
 
-    public boolean checkCapturePawn(int id, Piece currentPiece, Piece otherPiece) {
+    /*public boolean checkCapturePawn(int id, Piece currentPiece, Piece otherPiece) {
         if(id == 0) {
             if (otherPiece.getX() == currentPiece.getX() + 1) {
                 if (otherPiece.getY() == currentPiece.getY() + 1) {
@@ -447,7 +450,7 @@ public class ChessState {
             }
         }
         return false;
-    }
+    }*/
 
     //checks if the player moving is a pawn and if that pawn is able to be promoted because of its current position
     public boolean checkPromotion(Piece p) {
