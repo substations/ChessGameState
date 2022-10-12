@@ -499,7 +499,7 @@ public class ChessState {
         String toReturn = "";
         for(int i = 0; i < pieces.length; i++) {
             for(int j = 0; j < pieces[i].length; j++) {
-                toReturn += (String.valueOf(pieces[j][i]) + " ");
+                toReturn += (pieces[j][i] + " ");
             }
             toReturn += "\n";
         }
@@ -519,7 +519,6 @@ public class ChessState {
         return toReturn;
     }
 
-    public int getTurnCount(){return this.turnCount;}
 
     public ArrayList<Piece> getWhiteCapturedPieces(){return this.whiteCapturedPieces;}
     public ArrayList<Piece> getBlackCapturedPieces(){return this.blackCapturedPieces;}
