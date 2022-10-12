@@ -39,10 +39,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textView.append("\n" + currPlayer + "'s Move\n");
         textView.append(currPlayer + " chooses to move a pawn\n");
         if(canMove()){
+            if(canCapture()){
+                textView.append(currPlayer + " has captured a pawn\n");
+                makeCapture();
+            }
             makeMove();
-        }else if(canCapture()){
-            textView.append(currPlayer + " has captured a pawn\n");
-            makeCapture();
         }
         numClicks++;
         firstInstance.setWhoseMove(1 - firstInstance.getWhoseMove());
@@ -58,12 +59,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     && firstInstance.checkMovePiece(firstInstance.getWhoseMove(), firstInstance.getPiece(4, 6),
                     firstInstance.getPiece(4, 4));
         }else if(numClicks == 1){
-            textView.append(""+firstInstance.getWhoseMove());
+            //textView.append(""+firstInstance.getWhoseMove());
             move = firstInstance.checkSelectPiece(firstInstance.getWhoseMove(), firstInstance.getPiece(3, 1))
                     && firstInstance.checkMovePiece(firstInstance.getWhoseMove(), firstInstance.getPiece(3, 1),
                     firstInstance.getPiece(3, 3));
         }else if(numClicks == 2){
-            move = firstInstance.checkSelectPiece(firstInstance.getWhoseMove(), firstInstance.getPiece(3, 1))
+            move = firstInstance.checkSelectPiece(firstInstance.getWhoseMove(), firstInstance.getPiece(4, 4))
                     && firstInstance.checkMovePiece(firstInstance.getWhoseMove(), firstInstance.getPiece(4, 4),
                     firstInstance.getPiece(3, 3));
         }
@@ -77,15 +78,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(numClicks == 1){
             firstInstance.setPiece(3, 3, firstInstance.getPiece(3, 1));
             firstInstance.setPiece(3, 1, firstInstance.emptyPiece);
+        }else if(numClicks == 2) {
+            firstInstance.setPiece(4, 4, firstInstance.getPiece(3, 3));
+            firstInstance.setPiece(4, 4, firstInstance.emptyPiece);
         }
     }
 
     public void makeCapture(){
         int currPlayer = firstInstance.getWhoseMove();
         if(currPlayer == 0) {
-            firstInstance.getWhiteCapturedPieces().add(firstInstance.getPiece(3,3));
-            firstInstance.setPiece(3, 3, firstInstance.getPiece(4, 4));
-            firstInstance.setPiece(4, 4, firstInstance.emptyPiece);
+            firstInstance.getWhiteCapturedPieces().add(firstInstance.getPiece(3,3));;
         }
     }
 

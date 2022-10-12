@@ -26,8 +26,8 @@ public class ChessState {
     public ChessState() {
         pieces = new Piece[8][8];
         board = new int[8][8];
-        whiteCapturedPieces =new ArrayList<>();
-        blackCapturedPieces =new ArrayList<>();
+        whiteCapturedPieces = new ArrayList<>();
+        blackCapturedPieces = new ArrayList<>();
 
         // Setting the initial position of all of the pieces
         for (int row = 0; row < pieces.length; row++) {
@@ -46,7 +46,7 @@ public class ChessState {
                 } else if (col == 6) {
                     pieces[row][6] = new Piece(Piece.PieceType.PAWN, Piece.ColorType.WHITE, row, 6);
                 } else if (col == 7) {
-                    pieces[0][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.WHITE,0, col);
+                    pieces[0][col] = new Piece(Piece.PieceType.ROOK, Piece.ColorType.WHITE, 0, col);
                     pieces[1][col] = new Piece(Piece.PieceType.KNIGHT, Piece.ColorType.WHITE, 1, col);
                     pieces[2][col] = new Piece(Piece.PieceType.BISHOP, Piece.ColorType.WHITE, 2, col);
                     pieces[3][col] = new Piece(Piece.PieceType.QUEEN, Piece.ColorType.WHITE, 3, col);
@@ -59,11 +59,11 @@ public class ChessState {
                 }
             }
         }
-        emptyPiece = new Piece(Piece.PieceType.EMPTY,Piece.ColorType.EMPTY, 0, 0);
+        emptyPiece = new Piece(Piece.PieceType.EMPTY, Piece.ColorType.EMPTY, 0, 0);
         piecesPlaced = true;
 
-        for(int row = 0; row < board.length; row++) {
-            for(int col = 0; col < board[row].length; col++) {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[row].length; col++) {
                 board[row][col] = 0;
             }
         }
@@ -77,14 +77,14 @@ public class ChessState {
 
         pieces = new Piece[8][8];
         board = new int[8][8];
-        for(int i = 0; i < pieces.length; i++) {
-            for(int j = 0; j < pieces[i].length; j++) {
+        for (int i = 0; i < pieces.length; i++) {
+            for (int j = 0; j < pieces[i].length; j++) {
                 pieces[i][j] = other.pieces[i][j];
             }
         }
 
-        for(int i = 0; i < board.length; i++) {
-            for(int j = 0; j < board[i].length; j++) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
                 board[i][j] = other.board[i][j];
             }
         }
@@ -107,6 +107,8 @@ public class ChessState {
     }
 
     public void setPiece(int row, int col, Piece piece) {
+        piece.setY(col);
+        piece.setX(row);
         pieces[row][col] = piece;
     }
 
@@ -119,89 +121,105 @@ public class ChessState {
     }
 
     //checks if selected piece and playerToMove color is consistent
-    public boolean checkSelectPiece(int id, Piece p){
+    public boolean checkSelectPiece(int id, Piece p) {
         //check if white
-        if((p.getPieceColor() == Piece.ColorType.WHITE) && (id == 0)){
+        if ((p.getPieceColor() == Piece.ColorType.WHITE) && (id == 0)) {
             return true;
-        } else if ((p.getPieceColor() == Piece.ColorType.BLACK) && (id == 1)){ //check if black
+        } else if ((p.getPieceColor() == Piece.ColorType.BLACK) && (id == 1)) { //check if black
             return true;
         }
         return false;
     }
 
     //checks if the selected piece is able to go to the new position they want to move to
-    public boolean checkMovePiece(int id, Piece currentPiece, Piece newPosition){
-        if(id == 0 && currentPiece.getPieceColor() == Piece.ColorType.WHITE
+    public boolean checkMovePiece(int id, Piece currentPiece, Piece newPosition) {
+        if (id == 0 && currentPiece.getPieceColor() == Piece.ColorType.WHITE
                 && newPosition.getPieceColor() != Piece.ColorType.WHITE) {
             if (currentPiece.getPieceType() == Piece.PieceType.PAWN) {
                 Piece.ColorType color = Piece.ColorType.WHITE;
-                movePawn(currentPiece, newPosition, color);
+                return movePawn(currentPiece, newPosition, color);
             } else if (currentPiece.getPieceType() == Piece.PieceType.BISHOP) {
-                moveBishop(currentPiece, newPosition);
+                return moveBishop(currentPiece, newPosition);
             } else if (currentPiece.getPieceType() == Piece.PieceType.KNIGHT) {
-                moveKnight(currentPiece, newPosition);
+                return moveKnight(currentPiece, newPosition);
             } else if (currentPiece.getPieceType() == Piece.PieceType.ROOK) {
-                moveRook(currentPiece, newPosition);
+                return moveRook(currentPiece, newPosition);
             } else if (currentPiece.getPieceType() == Piece.PieceType.QUEEN) {
-                moveQueen(currentPiece, newPosition);
+                return moveQueen(currentPiece, newPosition);
             } else if (currentPiece.getPieceType() == Piece.PieceType.KING) {
-                moveKing(currentPiece, newPosition);
+                return moveKing(currentPiece, newPosition);
             }
         } else if (id == 1 && currentPiece.getPieceColor() == Piece.ColorType.BLACK
                 && newPosition.getPieceColor() != Piece.ColorType.BLACK) {
             if (currentPiece.getPieceType() == Piece.PieceType.PAWN) {
                 Piece.ColorType color = Piece.ColorType.BLACK;
-                movePawn(currentPiece, newPosition, color);
+                return movePawn(currentPiece, newPosition, color);
             } else if (currentPiece.getPieceType() == Piece.PieceType.BISHOP) {
-                moveBishop(currentPiece, newPosition);
+                return moveBishop(currentPiece, newPosition);
             } else if (currentPiece.getPieceType() == Piece.PieceType.KNIGHT) {
-                moveKnight(currentPiece, newPosition);
+                return moveKnight(currentPiece, newPosition);
             } else if (currentPiece.getPieceType() == Piece.PieceType.ROOK) {
-                moveRook(currentPiece, newPosition);
+                return moveRook(currentPiece, newPosition);
             } else if (currentPiece.getPieceType() == Piece.PieceType.QUEEN) {
-                moveQueen(currentPiece, newPosition);
+                return moveQueen(currentPiece, newPosition);
             } else if (currentPiece.getPieceType() == Piece.PieceType.KING) {
-                moveKing(currentPiece, newPosition);
+                return moveKing(currentPiece, newPosition);
             }
         }
         return false;
     }
 
     public boolean movePawn(Piece currentPosition, Piece newPosition, Piece.ColorType color) {
-        if(color == Piece.ColorType.WHITE) {
-            if (newPosition.getX() == (currentPosition.getX() + 2)) {
-                if (newPosition.getY() == 6) {
+        if (color == Piece.ColorType.WHITE) {
+            if (newPosition.getY() == (currentPosition.getY() - 2)
+                    && newPosition.getX() == currentPosition.getX()) {
+                if (currentPosition.getY() == 6) {
                     return true;
                 }
-            } else if (newPosition.getX() == (currentPosition.getX() + 1)) {
+            } else if (newPosition.getY() == (currentPosition.getY() - 1)
+                    && newPosition.getX() == currentPosition.getX()) {
                 return true;
-            } else if (newPosition.getX() == currentPosition.getX() + 1 &&
-                    newPosition.getY() == currentPosition.getY() + 1) {
-                return true;
+            } else if (newPosition.getY() == currentPosition.getY() - 1 &&
+                    newPosition.getX() == currentPosition.getX() + 1) {
+                if (newPosition.getPieceColor() == Piece.ColorType.BLACK) {
+                    return true;
+                }
+            } else if (newPosition.getY() == currentPosition.getY() - 1 &&
+                    newPosition.getX() == currentPosition.getX() - 1) {
+                if (newPosition.getPieceColor() == Piece.ColorType.BLACK) {
+                    return true;
+                }
             }
-        } else if(color == Piece.ColorType.BLACK) {
-            if (newPosition.getX() == (currentPosition.getX() - 2)) {
-                if (newPosition.getY() == 1) {
+        } else if (color == Piece.ColorType.BLACK) {
+            if (newPosition.getY() == (currentPosition.getY() + 2)) {
+                if (currentPosition.getY() == 1) {
                     return true;
                 }
-            } else if (newPosition.getX() == (currentPosition.getX() - 1)) {
+            } else if (newPosition.getY() == (currentPosition.getY() + 1)) {
                 return true;
+            } else if (newPosition.getY() == currentPosition.getY() + 1 &&
+                    newPosition.getX() == currentPosition.getX() + 1) {
+                if (newPosition.getPieceColor() == Piece.ColorType.WHITE) {
+                    return true;
+                }
+            } else if (newPosition.getY() == currentPosition.getY() + 1 &&
+                    newPosition.getX() == currentPosition.getX() - 1) {
+                if (newPosition.getPieceColor() == Piece.ColorType.WHITE) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
     public boolean moveBishop(Piece currentPosition, Piece newPosition) {
-        if(generalDiagonalMove(currentPosition, newPosition)) {
-            return true;
-        }
-        return false;
+        return generalDiagonalMove(currentPosition, newPosition);
     }
 
     public boolean generalDiagonalMove(Piece currentPosition, Piece newPosition) {
-        for(int i = 1; i < pieces.length; i++) {
+        for (int i = 1; i < pieces.length; i++) {
             //moving up and right
-            if(currentPosition.getX() + i <= 7) {
+            if (currentPosition.getX() + i <= 7) {
                 //moving right
                 if (newPosition.getX() == currentPosition.getX() + i) {
                     if (currentPosition.getY() - i >= 0) {
@@ -213,7 +231,7 @@ public class ChessState {
                 }
             }
             //moving up and left
-            if(currentPosition.getX() - i >= 0) {
+            if (currentPosition.getX() - i >= 0) {
                 //moving left
                 if (newPosition.getX() == currentPosition.getX() - i) {
                     if (currentPosition.getY() - i >= 0) {
@@ -225,7 +243,7 @@ public class ChessState {
                 }
             }
             //moving down and left
-            if(currentPosition.getX() - i >= 0) {
+            if (currentPosition.getX() - i >= 0) {
                 //moving left
                 if (newPosition.getX() == currentPosition.getX() - i) {
                     if (currentPosition.getY() + i <= 7) {
@@ -237,7 +255,7 @@ public class ChessState {
                 }
             }
             //moving down and right
-            if(currentPosition.getX() + i <= 7) {
+            if (currentPosition.getX() + i <= 7) {
                 //moving right
                 if (newPosition.getX() == currentPosition.getX() + i) {
                     if (currentPosition.getY() + i <= 7) {
@@ -253,28 +271,28 @@ public class ChessState {
     }
 
     public boolean generalSideMove(Piece currentPosition, Piece newPosition) {
-        for(int i = 1; i < pieces.length; i++) {
+        for (int i = 1; i < pieces.length; i++) {
             //moving left
-            if(newPosition.getX() - i >= 0) {
-                if(newPosition.getX() == currentPosition.getX() - i) {
+            if (newPosition.getX() - i >= 0) {
+                if (newPosition.getX() == currentPosition.getX() - i) {
                     return true;
                 }
             }
             //moving right
-            if(newPosition.getX() + i <= 7) {
-                if(newPosition.getX() == currentPosition.getX() + i) {
+            if (newPosition.getX() + i <= 7) {
+                if (newPosition.getX() == currentPosition.getX() + i) {
                     return true;
                 }
             }
             //moving up
-            if(newPosition.getY() - i >= 0) {
-                if(newPosition.getY() == currentPosition.getY() - i) {
+            if (newPosition.getY() - i >= 0) {
+                if (newPosition.getY() == currentPosition.getY() - i) {
                     return true;
                 }
             }
             //moving down
-            if(newPosition.getY() + i <= 7) {
-                if(newPosition.getY() == currentPosition.getY() + i) {
+            if (newPosition.getY() + i <= 7) {
+                if (newPosition.getY() == currentPosition.getY() + i) {
                     return true;
                 }
             }
@@ -283,7 +301,7 @@ public class ChessState {
     }
 
     public boolean moveKnight(Piece currentPosition, Piece newPosition) {
-        if(currentPosition.getX() + 2 <= 7) {
+        if (currentPosition.getX() + 2 <= 7) {
             if (newPosition.getX() == currentPosition.getX() + 2) {
                 if (newPosition.getY() == currentPosition.getY() + 1) {
                     return true;
@@ -292,7 +310,7 @@ public class ChessState {
                 }
             }
         }
-        if(currentPosition.getX() - 2 >= 0) {
+        if (currentPosition.getX() - 2 >= 0) {
             if (newPosition.getX() == currentPosition.getX() - 2) {
                 if (newPosition.getY() == currentPosition.getY() + 1) {
                     return true;
@@ -301,7 +319,7 @@ public class ChessState {
                 }
             }
         }
-        if(currentPosition.getY() + 2 <= 7) {
+        if (currentPosition.getY() + 2 <= 7) {
             if (newPosition.getY() == currentPosition.getY() + 2) {
                 if (newPosition.getX() == currentPosition.getX() + 1) {
                     return true;
@@ -310,7 +328,7 @@ public class ChessState {
                 }
             }
         }
-        if(currentPosition.getY() - 2 >= 0) {
+        if (currentPosition.getY() - 2 >= 0) {
             if (newPosition.getY() == currentPosition.getY() - 2) {
                 if (newPosition.getX() == currentPosition.getX() + 1) {
                     return true;
@@ -323,25 +341,19 @@ public class ChessState {
     }
 
     public boolean moveRook(Piece currentPosition, Piece newPosition) {
-        if(generalSideMove(currentPosition, newPosition)) {
-            return true;
-        }
-        return false;
+        return generalSideMove(currentPosition, newPosition);
     }
 
     public boolean moveQueen(Piece currentPosition, Piece newPosition) {
-        if(generalDiagonalMove(currentPosition, newPosition)) {
+        if (generalDiagonalMove(currentPosition, newPosition)) {
             return true;
         }
-        if(generalSideMove(currentPosition, newPosition)) {
-            return true;
-        }
-        return false;
+        return generalSideMove(currentPosition, newPosition);
     }
 
     public boolean moveKing(Piece currentPosition, Piece newPosition) {
         //moving up and right
-        if(currentPosition.getX() + 1 <= 7) {
+        if (currentPosition.getX() + 1 <= 7) {
             //moving right
             if (newPosition.getX() == currentPosition.getX() + 1) {
                 if (currentPosition.getY() - 1 >= 0) {
@@ -353,7 +365,7 @@ public class ChessState {
             }
         }
         //moving up and left
-        if(currentPosition.getX() - 1 >= 0) {
+        if (currentPosition.getX() - 1 >= 0) {
             //moving left
             if (newPosition.getX() == currentPosition.getX() - 1) {
                 if (currentPosition.getY() - 1 >= 0) {
@@ -365,7 +377,7 @@ public class ChessState {
             }
         }
         //moving down and left
-        if(currentPosition.getX() - 1 >= 0) {
+        if (currentPosition.getX() - 1 >= 0) {
             //moving left
             if (newPosition.getX() == currentPosition.getX() - 1) {
                 if (currentPosition.getY() + 1 <= 7) {
@@ -377,7 +389,7 @@ public class ChessState {
             }
         }
         //moving down and right
-        if(currentPosition.getX() + 1 <= 7) {
+        if (currentPosition.getX() + 1 <= 7) {
             //moving right
             if (newPosition.getX() == currentPosition.getX() + 1) {
                 if (currentPosition.getY() + 1 <= 7) {
@@ -389,26 +401,26 @@ public class ChessState {
             }
         }
         //moving left
-        if(newPosition.getX() - 1 >= 0) {
-            if(newPosition.getX() == currentPosition.getX() - 1) {
+        if (newPosition.getX() - 1 >= 0) {
+            if (newPosition.getX() == currentPosition.getX() - 1) {
                 return true;
             }
         }
         //moving right
-        if(newPosition.getX() + 1 <= 7) {
-            if(newPosition.getX() == currentPosition.getX() + 1) {
+        if (newPosition.getX() + 1 <= 7) {
+            if (newPosition.getX() == currentPosition.getX() + 1) {
                 return true;
             }
         }
         //moving up
-        if(newPosition.getY() - 1 >= 0) {
-            if(newPosition.getY() == currentPosition.getY() - 1) {
+        if (newPosition.getY() - 1 >= 0) {
+            if (newPosition.getY() == currentPosition.getY() - 1) {
                 return true;
             }
         }
         //moving down
-        if(newPosition.getY() + 1 <= 7) {
-            if(newPosition.getY() == currentPosition.getY() + 1) {
+        if (newPosition.getY() + 1 <= 7) {
+            if (newPosition.getY() == currentPosition.getY() + 1) {
                 return true;
             }
         }
@@ -417,16 +429,12 @@ public class ChessState {
 
     //checks if the selected piece is able to capture the piece on the position they want to move to
     public boolean checkCapture(int id, Piece currentPiece, Piece otherPiece) {
-        if(currentPiece.getPieceType() != Piece.PieceType.PAWN) {
-            if (id == 0 && currentPiece.getPieceColor() == Piece.ColorType.WHITE &&
-                    otherPiece.getPieceColor() == Piece.ColorType.BLACK) {
-                return true;
-            } else if (id == 1 && currentPiece.getPieceColor() == Piece.ColorType.BLACK &&
-                    otherPiece.getPieceColor() == Piece.ColorType.WHITE) {
-                return true;
-            }
-        } else if (currentPiece.getPieceType() == Piece.PieceType.PAWN) {
-            //checkCapturePawn(id, currentPiece, otherPiece);
+        if (id == 0 && currentPiece.getPieceColor() == Piece.ColorType.WHITE &&
+                otherPiece.getPieceColor() == Piece.ColorType.BLACK) {
+            return true;
+        } else if (id == 1 && currentPiece.getPieceColor() == Piece.ColorType.BLACK &&
+                otherPiece.getPieceColor() == Piece.ColorType.WHITE) {
+            return true;
         }
         return false;
     }

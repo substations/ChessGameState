@@ -44,6 +44,14 @@ public class Piece {
         return y;
     }
 
+    public void setX(int newX) {
+        x = newX;
+    }
+
+    public void setY(int newY) {
+        y = newY;
+    }
+
     @Override
     public String toString() {
         if(pieceType == PieceType.PAWN) {
