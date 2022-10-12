@@ -79,14 +79,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean canMove() {
         boolean move = false;
         if(numClicks == 0) {
+            //White moves a pawn forward two spaces
             move = firstInstance.checkSelectPiece(firstInstance.getWhoseMove(), firstInstance.getPiece(4, 6))
                     && firstInstance.checkMovePiece(firstInstance.getWhoseMove(), firstInstance.getPiece(4, 6),
                     firstInstance.getPiece(4, 4));
         }else if(numClicks == 1){
+            //Black moves a pawn forward two spaces
             move = firstInstance.checkSelectPiece(firstInstance.getWhoseMove(), firstInstance.getPiece(3, 1))
                     && firstInstance.checkMovePiece(firstInstance.getWhoseMove(), firstInstance.getPiece(3, 1),
                     firstInstance.getPiece(3, 3));
         }else if(numClicks == 2){
+            //White captures blacks pawn
             move = firstInstance.checkSelectPiece(firstInstance.getWhoseMove(), firstInstance.getPiece(4, 4))
                     && firstInstance.checkMovePiece(firstInstance.getWhoseMove(), firstInstance.getPiece(4, 4),
                     firstInstance.getPiece(3, 3));
@@ -115,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * captured pieces arraylist
      */
     public void makeCapture(){
+        //Adds a pawn to white's captured pieces
         int currPlayer = firstInstance.getWhoseMove();
         if(currPlayer == 0) {
             firstInstance.getWhiteCapturedPieces().add(firstInstance.getPiece(3,3));;
