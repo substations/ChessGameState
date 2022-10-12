@@ -17,11 +17,10 @@ public class Piece {
 
     private PieceType pieceType;
     private ColorType pieceColor;
-
     private int x;
     private int y;
 
-    public Piece(PieceType pieceType, ColorType pieceColor, int x, int y) {
+    public Piece(PieceType pieceType, ColorType pieceColor,int x, int y) {
         this.pieceType = pieceType;
         this.pieceColor = pieceColor;
         this.x = x;
