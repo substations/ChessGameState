@@ -136,6 +136,7 @@ public class ChessState {
         return false;
     }
 
+    //checks if the pawn can move to the designated position
     public boolean movePawn(Piece currentPosition, Piece newPosition, Piece.ColorType color) {
         if (color == Piece.ColorType.WHITE) {
             if (newPosition.getY() == (currentPosition.getY() - 2)
@@ -179,10 +180,12 @@ public class ChessState {
         return false;
     }
 
+    //checks if the bishop can move to the designated position by a diagonal movement
     public boolean moveBishop(Piece currentPosition, Piece newPosition) {
         return generalDiagonalMove(currentPosition, newPosition);
     }
 
+    //checks if a diagonal movement is possible for the positions input
     public boolean generalDiagonalMove(Piece currentPosition, Piece newPosition) {
         for (int i = 1; i < pieces.length; i++) {
 
@@ -230,6 +233,7 @@ public class ChessState {
         return false;
     }
 
+    //checks if a horizontal movement or vertical movement is possible for the positions input
     public boolean generalSideMove(Piece currentPosition, Piece newPosition) {
         for (int i = 1; i < pieces.length; i++) {
             //moving left
@@ -272,7 +276,10 @@ public class ChessState {
         return false;
     }
 
+    //checks if the knight can move to the designated position
     public boolean moveKnight(Piece currentPosition, Piece newPosition) {
+
+        //right 2
         if (currentPosition.getX() + 2 <= 7) {
             if (newPosition.getX() == currentPosition.getX() + 2) {
                 if (newPosition.getY() == currentPosition.getY() + 1) {
@@ -288,6 +295,8 @@ public class ChessState {
                 }
             }
         }
+
+        //left 2
         if (currentPosition.getX() - 2 >= 0) {
             if (newPosition.getX() == currentPosition.getX() - 2) {
                 if (newPosition.getY() == currentPosition.getY() + 1) {
@@ -303,6 +312,8 @@ public class ChessState {
                 }
             }
         }
+
+        //down 2
         if (currentPosition.getY() + 2 <= 7) {
             if (newPosition.getY() == currentPosition.getY() + 2) {
                 if (newPosition.getX() == currentPosition.getX() + 1) {
@@ -318,6 +329,8 @@ public class ChessState {
                 }
             }
         }
+
+        //up 2
         if (currentPosition.getY() - 2 >= 0) {
             if (newPosition.getY() == currentPosition.getY() - 2) {
                 if (newPosition.getX() == currentPosition.getX() + 1) {
@@ -336,10 +349,12 @@ public class ChessState {
         return false;
     }
 
+    //checks if the rook can move to the new position
     public boolean moveRook(Piece currentPosition, Piece newPosition) {
         return generalSideMove(currentPosition, newPosition);
     }
 
+    //checks if the queen can move to the new position
     public boolean moveQueen(Piece currentPosition, Piece newPosition) {
         if (generalDiagonalMove(currentPosition, newPosition)) {
             return true;
@@ -347,6 +362,7 @@ public class ChessState {
         return generalSideMove(currentPosition, newPosition);
     }
 
+    //checks if the king can move to the new position
     public boolean moveKing(Piece currentPosition, Piece newPosition) {
         //moving up and right
         if (currentPosition.getX() + 1 <= 7 && currentPosition.getY() - 1 >= 0) {
@@ -431,7 +447,8 @@ public class ChessState {
         return false;
     }
 
-    //checks if the selected piece is able to capture the piece on the position they want to move to
+    //checks if the selected piece is able to capture the piece on the position
+    // they want to move to
     public boolean checkCapture(int id, Piece currentPiece, Piece otherPiece) {
         if (id == 0 && currentPiece.getPieceColor() == Piece.ColorType.WHITE &&
                 otherPiece.getPieceColor() == Piece.ColorType.BLACK) {
@@ -443,7 +460,8 @@ public class ChessState {
         return false;
     }
 
-    //checks if the player moving is a pawn and if that pawn is able to be promoted because of its current position
+    //checks if the player moving is a pawn and if that pawn is able to be
+    //promoted because of its current position
     public boolean checkPromotion(Piece p) {
         if (p.getPieceType() == Piece.PieceType.PAWN && p.getPieceColor() == Piece.ColorType.WHITE) {
             for(int i = 0; i < pieces[0].length; i++) {
