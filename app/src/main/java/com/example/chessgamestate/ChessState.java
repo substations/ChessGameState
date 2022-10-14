@@ -474,19 +474,20 @@ public class ChessState {
     @Override
     public String toString() {
         String toReturn = "";
+
+        //Adds the pieces to the String
+        //that is going to be returned
         for(int i = 0; i < pieces.length; i++) {
             for(int j = 0; j < pieces[i].length; j++) {
                 toReturn += (pieces[j][i] + " ");
             }
             toReturn += "\n";
         }
-
+        //Adds each colors captured pieces to the return String
         toReturn += "\n White Captured Pieces: ";
-
         for(int i = 0; i < whiteCapturedPieces.size(); i++){
             toReturn += (String.valueOf(whiteCapturedPieces.get(i)));
         }
-
         toReturn += "\n Black Captured Pieces: ";
         for(int i = 0; i < blackCapturedPieces.size(); i++){
             toReturn += (String.valueOf(blackCapturedPieces.get(i)));
