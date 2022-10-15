@@ -4,8 +4,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+
+
 import java.util.ArrayList;
 
+/**
+ * Contains the state of a Chess game.
+ *
+ * @author Simon
+ * @author Jayven
+ * @author Jonathan
+ * @author Sebastian
+ * @version October 2022
+ */
 public class ChessState {
 
     private Piece[][] pieces; // An array that holds all of the pieces and their position
